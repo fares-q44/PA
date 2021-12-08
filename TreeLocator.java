@@ -116,12 +116,27 @@ public class TreeLocator<T> implements Locator<T> {
 
 	@Override
 	public List<Pair<Location, List<T>>> getAll() {
-		return null;
+		List<Pair<Location, List<T>>> res = new LinkedList<Pair<Location, List<T>>>();
+		if (root == null){
+			return res;
+		}
+		preOrder(root, res);
+		return res;
 	}
-
+	private void preOrder(TreeLocatorNode<T> p , List<Pair<Location, List<T>>> res){
+		if(p == null){
+			return;
+		}else {
+			res.insert(new Pair<Location,List<T>>(p.loc,p.data));
+			preOrder(p.c1, res);
+			preOrder(p.c2, res);
+			preOrder(p.c3, res);
+			preOrder(p.c4, res);
+		}
+	}
+		
 	@Override
 	public Pair<List<Pair<Location, List<T>>>, Integer> inRange(Location lowerLeft, Location upperRight) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	private boolean removeSpecified(List<T> list,T e){
