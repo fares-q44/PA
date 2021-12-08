@@ -116,7 +116,6 @@ public class TreeLocator<T> implements Locator<T> {
 
 	@Override
 	public List<Pair<Location, List<T>>> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
