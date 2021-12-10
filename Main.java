@@ -3,6 +3,7 @@ public class Main {
 	public static void main(String[] args) {
 		testLocator();
 	}
+
 	private static void testVHM() {
 		VehicleHiringManager vhm = new VehicleHiringManager();
 		vhm.addVehicle("F", new Location(4, 7));
@@ -57,7 +58,6 @@ public class Main {
 		locator.add("Y", new Location(2, 2));
 		locator.add("S", new Location(6, 1));
 		locator.add("B", new Location(6, 3));
-		locator.add("J", new Location(6, 3));
 
 		System.out.println(locator.get(new Location(3, 5)).second);
 		System.out.println(locator.get(new Location(2, 6)).second);
@@ -65,6 +65,9 @@ public class Main {
 		System.out.println(locator.get(new Location(5, 1)).second);
 		System.out.println(locator.get(new Location(4, 2)).second);
 		System.out.println(locator.get(new Location(0, 0)).second);
+		System.out.println(locator.inRange(new Location(2, 2), new Location(8, 8)).second);
+		System.out.println(locator.inRange(new Location(4, 4), new Location(6, 6)).second);
+		System.out.println(locator.inRange(new Location(0, 0), new Location(2, 3)).second);
 	}
 
 	private static <T> void print(List<T> l) {

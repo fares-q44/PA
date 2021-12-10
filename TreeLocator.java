@@ -137,7 +137,49 @@ public class TreeLocator<T> implements Locator<T> {
 		
 	@Override
 	public Pair<List<Pair<Location, List<T>>>, Integer> inRange(Location lowerLeft, Location upperRight) {
-		return null;
+		int counter = 0;
+		List<Pair<Location, List<T>>> resultList = new LinkedList<Pair<Location,List<T>>>();
+		Pair<List<Pair<Location, List<T>>>, Integer> result = new Pair<List<Pair<Location, List<T>>>, Integer>(resultList,counter);
+		if(root == null){
+			return result;
+		}else {
+			recursiveInRange(root,result,lowerLeft,upperRight);
+			return result;
+		}
+	}
+	private void recursiveInRange(TreeLocatorNode<T> p,Pair<List<Pair<Location, List<T>>>, Integer> result,Location lowerLeft,Location upperRight){
+		if(p == null){
+			return;
+		}else {
+			result.second++;
+			if(p.loc.x >= lowerLeft.x && p.loc.x <= upperRight.x && p.loc.y >= lowerLeft.y && p.loc.y <= upperRight.y){
+				result.first.insert(new Pair<Location,List<T>>(p.loc, p.data));
+				recursiveInRange(p.c1, result, lowerLeft, upperRight);
+				recursiveInRange(p.c2, result, lowerLeft, upperRight);
+				recursiveInRange(p.c3, result, lowerLeft, upperRight);
+				recursiveInRange(p.c4, result, lowerLeft, upperRight);
+			}else if(p.loc.x > upperRight.x && p.loc.y >= upperRight.y){
+				recursiveInRange(p.c1, result, lowerLeft, upperRight);
+			}else if(p.loc.x >= upperRight.x && p.loc.y < lowerLeft.y){
+				recursiveInRange(p.c2, result, lowerLeft, upperRight);
+			}else if(p.loc.x < lowerLeft.x && p.loc.y <= lowerLeft.y){
+				recursiveInRange(p.c3, result, lowerLeft, upperRight);
+			}else if(p.loc.x <= lowerLeft.x && p.loc.y > lowerLeft.y){
+				recursiveInRange(p.c4, result, lowerLeft, upperRight);
+			}else if(p.loc.y > upperRight.y){
+				recursiveInRange(p.c1, result, lowerLeft, upperRight);
+				recursiveInRange(p.c4, result, lowerLeft, upperRight);
+			}else if(p.loc.y < lowerLeft.y){
+				recursiveInRange(p.c2, result, lowerLeft, upperRight);
+				recursiveInRange(p.c3, result, lowerLeft, upperRight);
+			}else if(p.loc.x > upperRight.x){
+				recursiveInRange(p.c1, result, lowerLeft, upperRight);
+				recursiveInRange(p.c2, result, lowerLeft, upperRight);
+			}else if(p.loc.x < lowerLeft.x){
+				recursiveInRange(p.c2, result, lowerLeft, upperRight);
+				recursiveInRange(p.c3, result, lowerLeft, upperRight);
+			}
+		}
 	}
 	private boolean removeSpecified(List<T> list,T e){
 		boolean f = false;
