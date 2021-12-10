@@ -1,9 +1,19 @@
 public class Main {
 
 	public static void main(String[] args) {
-		testLocator();
+		testBST();
 	}
+	private static void testBST(){
+		Map<Integer,String> g = new BST<Integer,String>();
+		g.insert(5,"f");
+		g.insert(2,"f");
+		g.insert(1,"f");
+		g.insert(3,"f");
+		g.insert(6,"f");
+		g.insert(7,"f");
+		g.remove(5);
 
+	}
 	private static void testVHM() {
 		VehicleHiringManager vhm = new VehicleHiringManager();
 		vhm.addVehicle("F", new Location(4, 7));

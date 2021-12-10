@@ -93,60 +93,53 @@ public class BST<K extends Comparable<K>, T> implements Map<K, T> {
 	}
 	@Override
 	public Pair<Boolean, Integer> remove(K key) {
-		Pair<Boolean, Integer> f = find(key);
-		if (f.first == false)
-			return new Pair<Boolean, Integer>(false, f.second);
-		BSTNode<K, T> tmp = root;
-		BSTNode<K, T> parent = null;
+		boolean isRemoved = false;
+		int counter = 0;
 		K key1 = key;
-		int comparison = 0;
-		boolean flag = false;
-		while (tmp != null && key.compareTo(tmp.key) != 0) {
-			parent = tmp;
-			if (key.compareTo(tmp.key) < 0) {
-				tmp = tmp.left;
-				comparison++;
-			} else {
-				tmp = tmp.right;
-				comparison++;
-			}
-		}
-		Pair<Boolean, Integer> check = new Pair<Boolean, Integer>(flag, comparison);
-		if (tmp == null)
-			return check;
-		else {
-			flag = true;
-			// Remove an element --> Case 3
-			if (tmp.left != null && tmp.right != null) {
-				BSTNode<K, T> min = tmp.right;
-				parent = tmp;
-				while (min.left != null) {
-					parent = min;
-					min = min.left;
-				}
-				tmp.key = min.key;
-				tmp.data = min.data;
-				key = min.key;
-				tmp = min;
+        BSTNode<K, T> p = root;
+        BSTNode<K, T> q = null;
+        while (p != null) {
+        	counter++;
+            if (key1.compareTo(p.key) < 0) {
+                q =p;
+                p = p.left;
+            } else if (key1.compareTo(p.key) > 0) {
+                q = p;
+                p = p.right;
+            } else {
+                if ((p.left != null) && (p.right != null)) {
+                    BSTNode<K, T> min = p.right;
+                    q = p;
+                    while (min.left != null) {
+                        q = min;
+                        min = min.left;
+                    }
+                    p.key = min.key;
+                    p.data = min.data;
+                    key1 = min.key;
+                    p = min;
+                }
+                if (p.left != null) {
+                    p = p.left;
+                } else {
+                    p = p.right;
+                }
 
-			}
-			// remove an element ---> Case 2 && 1
-			if (tmp.left != null)
-				tmp = tmp.left;
-			else if (tmp.right != null)
-				tmp = tmp.right;
-			
-			else{
-				if (tmp.key.compareTo(parent.key) < 0) {
-					comparison++;
-					parent.left = null;
-				} else
-					parent.right = null;
-				current = root;
-			}
-			check = new Pair<Boolean, Integer>(flag, comparison);
-			return check;
-		}
+                if (q == null) {
+                    root = p;
+                } else {
+                    if (key1.compareTo(q.key) < 0) {
+                        q.left = p;
+                    } else {
+                        q.right = p;
+                    }
+                }
+                current = root;
+                isRemoved = true;
+                break;
+            }
+        }
+        return new Pair<Boolean, Integer>(isRemoved, counter);
 	}
 	public void displayin(){
 		if(root == null){
