@@ -19,46 +19,55 @@ public class TreeLocatorMap<K extends Comparable<K>> implements LocatorMap<K> {
 
 	@Override
 	public Pair<Boolean, Integer> add(K k, Location loc) {
-		Pair<Boolean, Integer> res = Bst.find(k);
-		if(res.first){
-			return res;
+		Pair<Boolean, Integer> result = Bst.find(k);
+		if(result.first){
+			return result;
 		}else{
 			Bst.insert(k, loc);
 			locator.add(k, loc);
-			return res;
+			return result;
 		}
 	}
 
 	@Override
 	public Pair<Boolean, Integer> move(K k, Location loc) {
-		Pair<Boolean, Integer> res = Bst.find(k);
-		if(!res.first){
-			return res;
+		Pair<Boolean, Integer> result = Bst.find(k);
+		if(!result.first){
+			return result;
 		}else{
 			locator.remove(k, Bst.retrieve());
 			locator.add(k, loc);
 			Bst.update(loc);
-			return res;
+			return result;
 		}
 		
 	}
 
 	@Override
 	public Pair<Location, Integer> getLoc(K k) {
-		// TODO Auto-generated method stub
-		return null;
+		Pair<Boolean, Integer> result = Bst.find(k);
+		if (!result.first) {
+			return new Pair<Location, Integer>(null,result.second);
+		}else {
+			return new Pair<Location, Integer>(Bst.retrieve(),result.second);
+		}
 	}
 
 	@Override
 	public Pair<Boolean, Integer> remove(K k) {
-		// TODO Auto-generated method stub
-		return null;
+		Pair<Boolean, Integer> result = Bst.find(k);
+		if (!result.first) {
+			return result;
+		}else {
+			locator.remove(k, Bst.retrieve());
+			Bst.remove(k);
+			return result;
+		}
 	}
 
 	@Override
 	public List<K> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return Bst.getAll();
 	}
 
 	@Override

@@ -32,4 +32,5 @@ public interface Map<K extends Comparable<K>, T> {
 
 	// Returns all keys of the map as a list sorted in increasing order.
 	List<K> getAll();
+	void displayin();
 }

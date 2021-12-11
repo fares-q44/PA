@@ -1,7 +1,7 @@
 public class Main {
 
 	public static void main(String[] args) {
-		testBST();
+		testVHM();
 	}
 	private static void testBST(){
 		Map<Integer,String> g = new BST<Integer,String>();
@@ -78,6 +78,15 @@ public class Main {
 		System.out.println(locator.inRange(new Location(2, 2), new Location(8, 8)).second);
 		System.out.println(locator.inRange(new Location(4, 4), new Location(6, 6)).second);
 		System.out.println(locator.inRange(new Location(0, 0), new Location(2, 3)).second);
+	}
+	private static void testMap(){
+		LocatorMap<String> map = new TreeLocatorMap<String>();
+		map.add("k", new Location(2, 5));
+		map.add("f", new Location(3, 4));
+		map.add("a", new Location(8, 7));
+		map.getMap().displayin();
+		map.move("k", new Location(7, 7));
+		map.getMap().displayin();
 	}
 
 	private static <T> void print(List<T> l) {
